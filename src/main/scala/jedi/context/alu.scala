@@ -13,10 +13,10 @@ object alu:
     case "sub" => sub(args) // n-ary
     case "div" => div(args) // n-ary
     case "less" => less(args) // binary
-    //case "equals" => same(args)        // binary
-    //case "more" => more(args)          // binary
-    //case "unequals" => unequals(args)  // binary
-    //case "not" => not(args)            // unary
+    case "equals" => same(args)        // binary
+    case "more" => more(args)          // binary
+    case "unequals" => unequals(args)  // binary
+    case "not" => not(args)            // unary
     case "write" => write(args)
     // TBC
   }
@@ -83,7 +83,26 @@ object alu:
     println(args.head)
     Notification.DONE
 
+  private def same(args: List[Value]): Value = {
+    if (args.size != 2) throw new TypeException("2 inputs required by ==")
+    Boole(args.head == args(1))
+  }
 
+  private def more(args: List[Value]): Value = {
+    if (args.size != 2) throw new TypeException("2 inputs required by <")
+    Boole(args.head.asInstanceOf[Ordered[Value]] > args(1))
+  }
+
+  private def unequals(args: List[Value]): Value = {
+    if (args.size != 2) throw new TypeException("2 inputs required by !=")
+    Boole(args.head != args(1))
+  }
+
+  private def not(args: List[Value]): Value = {
+    if (args.size != 1) throw new TypeException("1 input required by !")
+    if (!args.head.isInstanceOf[Boole]) throw new TypeException("Inputs to ! must be boolean")
+    !args.head.asInstanceOf[Boole]
+  }
 
 
 // etc.

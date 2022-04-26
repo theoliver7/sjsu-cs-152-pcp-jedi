@@ -1,4 +1,4 @@
-package jedi.valTests
+package jedi.test
 
 import jedi.value._
 import jedi.context._

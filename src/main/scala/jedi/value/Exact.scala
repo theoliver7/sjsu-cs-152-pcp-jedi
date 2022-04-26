@@ -17,19 +17,19 @@ case class Exact(value: Int) extends Numeric with Ordered[Value] :
         else Exact(this.value / x.value)
       case x: Inexact =>
         if (x.value == 0.0) throw IllegalValueException("Can't divide by 0")
-        else Inexact(this.value.toDouble / x.value)
+        else Inexact(this.value / x.value)
       case _ => throw new TypeException("Numeric operand required")
 
   override def *(other: Value): Numeric =
     other match
       case x: Exact => Exact(this.value * x.value)
-      case x: Inexact => Inexact(this.value.toDouble * x.value)
+      case x: Inexact => Inexact(this.value * x.value)
       case _ => throw new TypeException("Numeric operand required")
 
   override def -(other: Value): Numeric =
     other match
       case x: Exact => Exact(this.value - x.value)
-      case x: Inexact => Inexact(this.value.toDouble - x.value)
+      case x: Inexact => Inexact(this.value - x.value)
       case _ => throw new TypeException("Numeric operand required")
 
   override def unary_- = Exact(-this.value)
@@ -46,3 +46,6 @@ case class Exact(value: Int) extends Numeric with Ordered[Value] :
       case x: Exact => x.isInstanceOf[Exact] && x.value == this.value
       case _ => false
     }
+  override def toString: String = value.toString
+
+  override def hashCode: Int = this.toString.hashCode
