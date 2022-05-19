@@ -1,0 +1,63 @@
+                                     Final Exam SOlutions
+
+=================================================
+1. Environment Diagram
+
+Part 1: Turned in as an image
+
+++++++++++++++++++++++++
+Part 2: c = ?
+
+=================================================
+2. Enhancing Jedi
+
+Part 1: Loop class
+
+package jedi.expression
+
+import jedi.context.Environment
+import jedi.context.TypeException
+import jedi.value.{Exact, Notification, Value}
+
+class Loop(count: Expression, body: Expression) extends SpecialForm :
+  override def execute(env: Environment): Value =
+    var counter = 0
+    if (!count.execute(env).isInstanceOf[Exact]) then throw TypeException("count must be of type Exact")
+
+    while (counter < count.execute(env).asInstanceOf[Exact].value) {
+      body.execute(env)
+      counter = counter + 1
+    }
+    Notification.DONE
+
+
+
+
+++++++++++++++++++++++++
+Part 2: Loop parser
+
+//loop ::= "loop"~ "[" ~ expression ~ "]" ~ expression
+  def loop: Parser[Loop] =
+    "loop" ~ "[" ~ expression ~ "]" ~ expression ^^ {
+      case "loop" ~ "[" ~ count ~ "]" ~ body => Loop(count, body)
+    }
+
+
+=================================================
+3. State Machine class
+
+class StateMachine[S](var currentState: Int, var finalState: Int):
+  def execute(instructions: List[Int => Int]): Unit =
+    for (x <- instructions) {
+      currentState = x(currentState)
+      if (currentState == finalState) return
+    }
+
+=================================================
+4. Prolog adder
+
+
+
+=================================================
+
+

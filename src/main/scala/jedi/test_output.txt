@@ -1,0 +1,36 @@
+C:\dev\jdk\jdk-17.0.1.12-hotspot\bin\java.exe -javaagent:C:\Users\olive\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\221.5080.210\lib\idea_rt.jar=55601:C:\Users\olive\AppData\Local\JetBrains\Toolbox\apps\IDEA-U\ch-0\221.5080.210\bin -Dfile.encoding=UTF-8 -classpath C:\dev\git\CS152Jedi\target\scala-3.1.2\classes;C:\Users\olive\AppData\Local\Coursier\cache\v1\https\repo1.maven.org\maven2\org\scala-lang\scala-library\2.13.8\scala-library-2.13.8.jar;C:\Users\olive\AppData\Local\Coursier\cache\v1\https\repo1.maven.org\maven2\org\scala-lang\scala3-library_3\3.1.2\scala3-library_3-3.1.2.jar;C:\dev\git\CS152Jedi\scala-parser-combinators_3-2.1.1.jar jedi.context.console jedi3tests.txt
+-> def count = var(0)
+OK
+-> count
+[0]
+-> [count]
+0
+-> def incCount = lambda() count := [count] + 1
+OK
+-> incCount()
+DONE
+-> incCount()
+DONE
+-> count
+[2]
+-> while ([count] < 10) { write("calling incCount"); incCount() }
+calling incCount
+calling incCount
+calling incCount
+calling incCount
+calling incCount
+calling incCount
+calling incCount
+calling incCount
+DONE
+-> count
+[10]
+-> def tri = lambda (n) { def result = var(0); def count = var(0); while([count] < n + 1) { result := [result] + [count]; count := [count] + 1}; [result]}
+OK
+-> tri(5)
+15
+-> tri(6)
+21
+bye
+
+Process finished with exit code 0

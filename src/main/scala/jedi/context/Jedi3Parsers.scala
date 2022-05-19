@@ -18,6 +18,12 @@ class Jedi3Parsers extends Jedi2Parsers {
       case "while" ~ "(" ~ condition ~ ")" ~ body => Iteration(condition, body)
     }
 
+  //loop ::= "loop"~ "[" ~ expression ~ "]" ~ expression
+  def loop: Parser[Loop] =
+    "loop" ~ "[" ~ expression ~ "]" ~ expression ^^ {
+      case "loop" ~ "[" ~ count ~ "]" ~ body => Loop(count, body)
+    }
+
   // dereference ::= "[" ~ expression ~ "]"
   def dereference: Parser[FunCall] =
     "[" ~ expression ~ "]" ^^ {
@@ -26,6 +32,6 @@ class Jedi3Parsers extends Jedi2Parsers {
 
   override def expression: Parser[Expression] = declaration | conditional | iteration | disjunction | failure("Invalid expression")
 
-  override def term: Parser[Expression] = lambda | funCall | block | assignment | dereference | literal | "(" ~> expression <~ ")"
+  override def term: Parser[Expression] = loop | lambda | funCall | block | assignment | dereference | literal | "(" ~> expression <~ ")"
 
 }
